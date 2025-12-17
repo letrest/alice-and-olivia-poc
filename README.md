@@ -7,6 +7,7 @@ This is a Proof of Concept (POC) website for Alice + Olivia, built with Next.js,
 - **Product Listing Page (PLP)**: Displays a grid of products with responsive layout.
 - **Product Detail Page (PDP)**: Features an image carousel and interactive color swatches.
 - **Responsive Design**: Optimized for mobile, tablet, and desktop.
+- **Add to Bag functionality**: Size selector and add to / remove from bag functionality
 
 ## Getting Started
 
