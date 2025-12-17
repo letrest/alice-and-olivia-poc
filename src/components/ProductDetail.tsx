@@ -23,7 +23,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
     }
 
     addToCart({
-      id: product.id,
+      productId: product.id,
       name: product.name,
       price: product.discountedPrice || product.price,
       image: selectedColor.images[0],
