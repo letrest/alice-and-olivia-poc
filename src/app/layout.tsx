@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
+import { CartProvider } from "@/context/CartContext";
+import CartDrawer from "@/components/CartDrawer";
 
 export const metadata: Metadata = {
   title: "Alice + Olivia POC",
@@ -17,8 +19,11 @@ export default function RootLayout({
       <body
         className="antialiased"
       >
-        <Header />
-        {children}
+        <CartProvider>
+          <Header />
+          <CartDrawer />
+          {children}
+        </CartProvider>
       </body>
     </html>
   );

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Product } from '@/data/products';
+import { useCart } from '@/context/CartContext';
 import ProductImageCarousel from './ProductImageCarousel';
 import ColorSwatches from './ColorSwatches';
 import SizeSelector from './SizeSelector';
@@ -11,8 +12,27 @@ interface ProductDetailProps {
 }
 
 export default function ProductDetail({ product }: ProductDetailProps) {
+  const { addToCart, openCart } = useCart();
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
+
+  const handleAddToBag = () => {
+    if (!selectedSize) {
+      alert('Please select a size');
+      return;
+    }
+
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.discountedPrice || product.price,
+      image: selectedColor.images[0],
+      color: selectedColor.name,
+      size: selectedSize,
+      quantity: 1,
+    });
+    openCart();
+  };
 
   return (
     <div className="lg:grid lg:grid-cols-2 lg:gap-x-12">
@@ -75,9 +95,15 @@ export default function ProductDetail({ product }: ProductDetailProps) {
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200 z-50 lg:static lg:p-0 lg:bg-transparent lg:border-none lg:mt-10">
           <button
             type="button"
-            className="flex w-full items-center justify-center bg-black px-8 py-4 text-base font-bold text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 uppercase tracking-widest transition-colors"
+            onClick={handleAddToBag}
+            disabled={!selectedSize}
+            className={`flex w-full items-center justify-center px-8 py-4 text-base font-bold text-white focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 uppercase tracking-widest transition-colors ${
+              selectedSize 
+                ? 'bg-black hover:bg-gray-800' 
+                : 'bg-gray-300 cursor-not-allowed'
+            }`}
           >
-            Add to Bag
+            {selectedSize ? 'Add to Bag' : 'Select Size'}
           </button>
         </div>
       </div>
